@@ -585,87 +585,23 @@ section {
 }
 
 /* ==========================================
-   PROGRAMS SECTION
-   ========================================== */
-.programs {
-    background: white;
-}
-
-.programs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-.program-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: all 0.4s;
-    border: 1px solid rgba(0,0,0,0.05);
-}
-
-.program-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-}
-
-.program-img {
-    position: relative;
-    height: 250px;
-    overflow: hidden;
-}
-
-.program-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
-}
-
-.program-card:hover .program-img img {
-    transform: scale(1.1);
-}
-
-.program-tag {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: var(--secondary);
-    color: white;
-    padding: 0.3rem 1rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
-.program-body {
-    padding: 2rem;
-}
-
-.program-body h4 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--dark);
-}
-
-.program-body p {
-    color: var(--gray);
-    font-size: 0.95rem;
-}
-
-/* ==========================================
-   CONTACT SECTION
+   CONTACT SECTION - FIXED
    ========================================== */
 .contact {
     background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
-    gap: 4rem;
+    gap: 3rem;
+    max-width: 100%;
+}
+
+/* Contact Info Left Side */
+.contact-info {
+    max-width: 100%;
 }
 
 .info-card {
@@ -678,6 +614,8 @@ section {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    max-width: 100%;
+    overflow: hidden; /* Prevent content overflow */
 }
 
 .info-card:hover {
@@ -695,33 +633,44 @@ section {
     justify-content: center;
     font-size: 1.5rem;
     color: white;
-    flex-shrink: 0;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.info-content {
+    min-width: 0; /* Important for text truncation */
+    flex: 1;
 }
 
 .info-card h4 {
     margin-bottom: 0.3rem;
     font-size: 1.1rem;
+    color: var(--dark);
 }
 
 .info-card a {
     color: var(--gray);
     text-decoration: none;
     transition: color 0.3s;
+    word-break: break-word; /* Break long email/text */
+    overflow-wrap: break-word;
+    font-size: 0.95rem;
+    display: block;
+    max-width: 100%;
 }
 
 .info-card a:hover {
     color: var(--primary);
 }
 
+/* Social Links */
 .social-links {
-    justify-content: center;
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
+    flex-wrap: wrap; /* Wrap on small screens */
 }
 
 .social-item {
-    margin: 1rem;
     width: 55px;
     height: 55px;
     border-radius: 16px;
@@ -732,6 +681,7 @@ section {
     color: white;
     transition: all 0.3s;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
 .social-item.instagram {
@@ -751,19 +701,21 @@ section {
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* Contact Form */
+/* Contact Form Right Side */
 .contact-form {
-    width: 100%;
     background: white;
     border-radius: 20px;
-    padding: 3rem;
+    padding: 2.5rem;
     box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    margin-bottom: 0;
 }
 
 .form-input {
@@ -777,6 +729,7 @@ section {
     font-family: 'Poppins', sans-serif;
     transition: all 0.3s;
     margin-bottom: 1rem;
+    max-width: 100%; /* Prevent overflow */
 }
 
 .form-input:focus {
@@ -789,7 +742,59 @@ section {
 textarea.form-input {
     resize: vertical;
     min-height: 120px;
+    max-width: 100%;
 }
+
+/* Responsive Contact */
+@media (max-width: 991px) {
+    .contact-grid {
+        grid-template-columns: 1fr; /* Stack on tablet/mobile */
+        gap: 2rem;
+    }
+    
+    .contact-info {
+        order: 2; /* Move contact info below form on mobile */
+    }
+    
+    .contact-form {
+        order: 1;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .info-card {
+        padding: 1.2rem;
+        gap: 1rem;
+    }
+    
+    .info-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .info-card h4 {
+        font-size: 1rem;
+    }
+    
+    .info-card a {
+        font-size: 0.9rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr; /* Stack inputs on mobile */
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+    }
+    
+    .social-links {
+        justify-content: center; /* Center social icons on mobile */
+    }
+}
+
 
 /* ==========================================
    FOOTER
