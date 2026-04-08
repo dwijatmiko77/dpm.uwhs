@@ -753,6 +753,7 @@ section {
 
 /* Contact Form */
 .contact-form {
+    width: 100%;
     background: white;
     border-radius: 20px;
     padding: 3rem;
