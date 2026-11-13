@@ -45,6 +45,99 @@
             line-height: 1.6;
             position: relative;
         }
+        
+        /* Container untuk semua bola cahaya */
+    .glow-container {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* Bola cahaya utama */
+    .glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.6;
+        will-change: transform;
+    }
+
+    /* Definisi tiap bola cahaya */
+    .glow-1 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, #6a5acd, transparent 70%);
+        top: -10%;
+        left: -5%;
+        animation: gerak1 35s ease-in-out infinite;
+    }
+
+    .glow-2 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #3b82f6, transparent 70%);
+        top: 40%;
+        right: -10%;
+        animation: gerak2 42s ease-in-out infinite;
+    }
+
+    .glow-3 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, #ec4899, transparent 70%);
+        bottom: -10%;
+        left: 25%;
+        animation: gerak3 38s ease-in-out infinite;
+    }
+
+    .glow-4 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, #14b8a6, transparent 70%);
+        top: 10%;
+        left: 55%;
+        animation: gerak4 45s ease-in-out infinite;
+    }
+
+    /* Animasi pergerakan lembut */
+    @keyframes gerak1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25%      { transform: translate(120px, 80px) scale(1.15); }
+        50%      { transform: translate(60px, 160px) scale(0.9); }
+        75%      { transform: translate(-40px, 90px) scale(1.1); }
+    }
+
+    @keyframes gerak2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33%      { transform: translate(-140px, -60px) scale(1.2); }
+        66%      { transform: translate(-70px, 100px) scale(0.85); }
+    }
+
+    @keyframes gerak3 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        30%      { transform: translate(100px, -90px) scale(1.1); }
+        60%      { transform: translate(-80px, -40px) scale(0.95); }
+    }
+
+    @keyframes gerak4 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50%      { transform: translate(-120px, 120px) scale(1.25); }
+    }
+
+    /* Konten contoh di atas background */
+    .konten {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
 
         /* Scrollbar */
         ::-webkit-scrollbar {
@@ -1353,6 +1446,13 @@
     </style>
 </head>
 <body>
+     <div class="glow-container">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+        <div class="glow glow-4"></div>
+    </div>
+    
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/6281362506087" 
        target="_blank" 
@@ -1916,5 +2016,32 @@
             });
         });
     </script>
+    
+      <script>
+        // Efek parallax halus: bola cahaya ikut bergeser mengikuti gerakan mouse
+        const container = document.querySelector('.glow-container');
+        const glows = document.querySelectorAll('.glow');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5);
+            const y = (e.clientY / window.innerHeight - 0.5);
+
+            glows.forEach((glow, i) => {
+                const kekuatan = (i + 1) * 15; // tiap bola punya intensitas berbeda
+                glow.style.setProperty(
+                    'translate',
+                    `${x * kekuatan}px ${y * kekuatan}px`
+                );
+            });
+        });
+
+        // Fallback: jika browser tidak support properti 'translate' CSS,
+        // gunakan transform dengan cara ini (tapi akan menimpa keyframes).
+        // Solusi aman: hanya jalankan jika CSS property 'translate' didukung.
+        if (!CSS.supports('translate', '1px')) {
+            document.removeEventListener('mousemove', () => {});
+        }
+    </script>
+    
 </body>
 </html>
